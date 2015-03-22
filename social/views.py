@@ -207,7 +207,7 @@ def checkuser(request):
             return HttpResponse("<span class='available'>&nbsp;&#x2714; This username is available</span>")
 
 def handler404(request):
-    response = render_to_response('static/social/404.html', {},
+    response = render_to_response('social/404.html', {},
                                   context_instance=RequestContext(request))
     response.status_code = 404
     return response
