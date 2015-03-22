@@ -39,7 +39,7 @@ def register(request):
     p = request.POST['pass']
     user = Member(username=u, password=p)
     user.save()
-    template = loader.get_template('social/user-registered.html')    
+    template = loader.get_template('social/user-registered.html')
     context = RequestContext(request, {
         'appname': appname,
         'username' : u
@@ -74,7 +74,7 @@ def login(request):
 def logout(request):
     if 'username' in request.session:
         u = request.session['username']
-        request.session.flush()        
+        request.session.flush()
         template = loader.get_template('social/logout.html')
         context = RequestContext(request, {
                 'appname': appname,
@@ -205,3 +205,9 @@ def checkuser(request):
             return HttpResponse("<span class='taken'>&nbsp;&#x2718; This username is taken</span>")
         else:
             return HttpResponse("<span class='available'>&nbsp;&#x2714; This username is available</span>")
+
+def handler404(request):
+    response = render_to_response('static/social/404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
