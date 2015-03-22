@@ -2,7 +2,13 @@
 
 {% block content %}
 <div class='main'>
-<h3>Messages not yet implemented</h3>
+  <form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Post Message" />
+  </form>
+  <p>{{view}}</p>
+<h3>Your Messages</h3>
 <br>
+<p>Type here to leave a message:</p>
 </div>
 {% endblock %}

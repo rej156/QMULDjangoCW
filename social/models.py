@@ -17,7 +17,7 @@ class Member(models.Model):
     def __str__(self):
         return self.username
 
-class Messages(models.Model):
+class Message(models.Model):
     text = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
     private = models.IntegerField()

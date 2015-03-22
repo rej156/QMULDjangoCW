@@ -2,7 +2,8 @@ from django.shortcuts import render,render_to_response
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 
-from social.models import Member, Profile
+from social.models import Member, Profile, Message
+from social.forms import MessageForm
 
 appname = 'Facemagazine'
 
@@ -14,13 +15,27 @@ def index(request):
     return HttpResponse(template.render(context))
 
 def messages(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            _text = form.cleaned_data['text']
+            _private = form.cleaned_data['text']
+            _recip = request.POST['view']
+            message = Message(text=_text,private=_private,recip=_recip)
+            message.save()
     if 'username' in request.session:
         username = request.session['username']
         template = loader.get_template('social/messages.html')
+        if 'view' in request.GET:
+            view = request.GET['view']
+        else:
+            view = None
         context = RequestContext(request, {
                 'appname': appname,
                 'username': username,
-                'loggedin': True
+                'loggedin': True,
+                'view': view,
+                'form': MessageForm()
             })
 
         return HttpResponse(template.render(context))
@@ -101,6 +116,7 @@ def member(request, view_user):
         return render(request, 'social/member.html', {
             'appname': appname,
             'username': username,
+            'view': view_user,
             'greeting': greeting,
             'profile': text,
             'loggedin': True}
