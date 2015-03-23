@@ -14,5 +14,8 @@
     <input type="submit" value="Post Message" />
   </form>
   <p>{{view}}</p>
+  {% for pm in pms %}
+    <h1>{{pm.text}}</h1>
+  {% endfor %}
 </div>
 {% endblock %}

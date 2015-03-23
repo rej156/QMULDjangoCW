@@ -19,25 +19,32 @@ def messages(request):
         form = MessageForm(request.POST)
         if form.is_valid():
             _text = form.cleaned_data['text']
-            _private = form.cleaned_data['text']
-            _recip = request.POST['view']
-            message = Message(text=_text,private=_private,recip=_recip)
+            _private = form.cleaned_data['private']
+            _auth = request.session['username']
+            if 'view' in request.GET:
+                _recip = request.GET['view']
+            else:
+                _recip = request.session['username']
+            message = Message(text=_text,private=_private,recip=_recip,auth=_auth)
             message.save()
     if 'username' in request.session:
         username = request.session['username']
+        auth = username
         template = loader.get_template('social/messages.html')
         if 'view' in request.GET:
             view = request.GET['view']
+            pms = Message.objects.filter(recip=auth,auth=view) | Message.objects.filter(recip=view,auth=username)
         else:
+            pms = Message.objects.filter(recip=username)
             view = None
         context = RequestContext(request, {
                 'appname': appname,
                 'username': username,
                 'loggedin': True,
                 'view': view,
+                'pms': pms,
                 'form': MessageForm()
             })
-
         return HttpResponse(template.render(context))
     else:
         raise Http404("User is not logged it, no access to messages page!")

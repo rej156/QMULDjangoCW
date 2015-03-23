@@ -19,5 +19,7 @@ class Member(models.Model):
 
 class Message(models.Model):
     text = models.TextField()
+    recip = models.CharField(max_length=200, null=True)
+    auth = models.CharField(max_length=200, null=True)
     time = models.DateTimeField(auto_now_add=True)
     private = models.IntegerField()
