@@ -31,7 +31,7 @@ li a, .button {
 li a:hover, .button:hover {
   color:green;
 }
- 
+
 .appname {
   text-align :center;
   background :#eb8;
@@ -93,4 +93,8 @@ li a:hover, .button:hover {
   font-weight:bold;
   font-style:italic;
   font-size :97px;
+}
+
+#id_private {
+  list-style-type: None;
 }
