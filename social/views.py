@@ -1,7 +1,7 @@
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse, Http404, JsonResponse
 from django.template import RequestContext, loader
-from django.forms.models import model_to_dict
+from django.core import serializers
 
 from social.models import Member, Profile, Message
 from social.forms import MessageForm
@@ -25,9 +25,8 @@ def getMessages(request):
         else:
             pms = Message.objects.filter(recip=username)
             view = None
-        pms = model_to_dict(pms)
         data = serializers.serialize('json', pms, fields=('auth','recip','private','text'))
-        return JsonResponse(data)
+        return JsonResponse(data,safe=False)
 
 def messages(request):
     if request.method == 'POST':

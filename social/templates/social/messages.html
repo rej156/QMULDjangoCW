@@ -9,7 +9,11 @@
     {% else %}
     Your Messages
     {%endif%}</h3>
-  <form action="?view={{view}}" method="post">{% csrf_token %}
+  <form action="
+    {% if view %}
+    ?view={{view}}
+    {% endif %}
+    " method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Post Message" />
   </form>
