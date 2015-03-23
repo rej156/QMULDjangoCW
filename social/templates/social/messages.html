@@ -9,13 +9,13 @@
     {% else %}
     Your Messages
     {%endif%}</h3>
-  <form action="" method="post">{% csrf_token %}
+  <form action="?view={{view}}" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Post Message" />
   </form>
   <p>{{view}}</p>
-  {% for pm in pms %}
-    <h1>{{pm.text}}</h1>
-  {% endfor %}
+  {#% for pm in pms %#}
+  <!-- <h1>pm.text</h1> -->
+  {#% endfor %#}
 </div>
 {% endblock %}

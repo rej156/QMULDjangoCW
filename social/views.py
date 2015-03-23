@@ -1,6 +1,7 @@
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse, Http404, JsonResponse
 from django.template import RequestContext, loader
+from django.forms.models import model_to_dict
 
 from social.models import Member, Profile, Message
 from social.forms import MessageForm
@@ -16,7 +17,17 @@ def index(request):
 
 def getMessages(request):
     if 'username' in request.session:
-        return JsonResponse({'fob': request.session['username']})
+        username = request.session['username']
+        auth = username
+        if 'view' in request.GET:
+            view = request.GET['view']
+            pms = Message.objects.filter(recip=auth,auth=view) | Message.objects.filter(recip=view,auth=username)
+        else:
+            pms = Message.objects.filter(recip=username)
+            view = None
+        pms = model_to_dict(pms)
+        data = serializers.serialize('json', pms, fields=('auth','recip','private','text'))
+        return JsonResponse(data)
 
 def messages(request):
     if request.method == 'POST':
@@ -25,8 +36,8 @@ def messages(request):
             _text = form.cleaned_data['text']
             _private = form.cleaned_data['private']
             _auth = request.session['username']
-            if 'view' in request.GET:
-                _recip = request.GET['view']
+            if 'view' in request.POST:
+                _recip = request.POST['view']
             else:
                 _recip = request.session['username']
             message = Message(text=_text,private=_private,recip=_recip,auth=_auth)
