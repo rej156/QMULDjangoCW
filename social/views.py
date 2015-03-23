@@ -25,7 +25,7 @@ def getMessages(request):
         else:
             pms = Message.objects.filter(recip=username)
             view = None
-        data = serializers.serialize('json', pms, fields=('auth','recip','private','text'))
+        data = serializers.serialize('json', pms, fields=('auth','recip','private','text','time'))
         return JsonResponse(data,safe=False)
 
 def messages(request):
