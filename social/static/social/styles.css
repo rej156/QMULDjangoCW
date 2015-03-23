@@ -97,4 +97,9 @@ li a:hover, .button:hover {
 
 #id_private {
   list-style-type: None;
+  padding: 0;
+}
+#message-list {
+  list-style-type: None;
+  padding: 0;
 }

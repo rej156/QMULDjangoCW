@@ -16,7 +16,7 @@
     {%endif%}
     <input type="submit" value="Post Message" />
   </form>
-  <button onClick="getMessages('{{view}}')">Hello</button>
+  <div id="messages"><ul id="message-list"></ul></div>
   <p>{{view}}</p>
   {#% for pm in pms %#}
   <!-- <h1>pm.text</h1> -->
@@ -24,4 +24,7 @@
 </div>
 <script src="{% static 'social/jquery-1.11.2.js' %}"></script>
 <script src="{% static 'social/ajax.js' %}"></script>
+<script>
+  getMessages('{{view}}');
+</script>
 {% endblock %}
