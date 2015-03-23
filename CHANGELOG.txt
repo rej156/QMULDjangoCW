@@ -1,0 +1,37 @@
+Devoured messages json api on button click
+
+Actually finished JSON API + fixed view query param
+
+Finished JSON Response
+
+Added getMessage json response
+
+Fixed login hyperlink going to own page with view query param
+
+Made messages work by user channels!
+
+Finished messages display forms for all members
+
+Initiate messageform and changed viewing messages from a specific user
+for private messages
+
+Updated 404.html location to social/templates/
+
+Updated render_to_response in view imports for 404
+
+Updated gitignore to ignore emacs autosaves
+
+Added 404 in views
+
+Added time,text and private fields to the Messages model
+
+mend
+
+Added dockercommand file for easy access
+
+Project now working with docker django image
+
+Changed dirs
+
+Initial commit
+
