@@ -1,5 +1,5 @@
 from django.shortcuts import render,render_to_response
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.template import RequestContext, loader
 
 from social.models import Member, Profile, Message
@@ -13,6 +13,10 @@ def index(request):
             'appname': appname,
         })
     return HttpResponse(template.render(context))
+
+def getMessages(request):
+    if 'username' in request.session:
+        return JsonResponse({'fob': request.session['username']})
 
 def messages(request):
     if request.method == 'POST':

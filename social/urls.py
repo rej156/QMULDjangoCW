@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^checkuser/$', views.checkuser),
     # messages page
     url(r'^messages/$', views.messages),
-)
+    # messages json api - GET
+    url(r'^messages.json/$', views.getMessages))
